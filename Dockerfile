@@ -72,4 +72,8 @@ RUN command -v dig nslookup host kdig drill mtr traceroute tcptraceroute \
     && mtr --version \
     && nc -h 2>&1 | head -n1
 
-CMD ["/bin/bash"]
+# The image is meant to run as a long-lived debug pod that you `kubectl exec`
+# into, so the default command must not exit: a plain `bash` with no TTY ends
+# immediately and Kubernetes reports CrashLoopBackOff. Override the command if
+# you want a one-shot run (e.g. `args: ["dig", "+trace", "example.com"]`).
+CMD ["sleep", "infinity"]

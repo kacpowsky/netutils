@@ -5,14 +5,17 @@ routing: `dig`, `mtr`, `traceroute`, `nc`, `tcpdump` and friends.
 
 ## Usage
 
+The default command is `sleep infinity`, so the container works both as a
+throwaway Docker container and as a long-lived pod you exec into.
+
 ```sh
-docker run --rm -it ghcr.io/kacpowsky/netutils
+docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN \
+  ghcr.io/kacpowsky/netutils bash
 ```
 
-Some tools need extra capabilities:
-
 ```sh
-docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN ghcr.io/kacpowsky/netutils
+kubectl run netutils --image=ghcr.io/kacpowsky/netutils:latest --restart=Never
+kubectl exec -it netutils -- bash
 ```
 
 Examples:
