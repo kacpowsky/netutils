@@ -1,0 +1,6 @@
+
+.claude-profile
+
+# Editor / OS noise
+.DS_Store
+*.swp
